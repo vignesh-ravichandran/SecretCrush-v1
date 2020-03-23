@@ -1,0 +1,219 @@
+<%- include("./partials/header") %>
+
+<nav class="navbar navbar-default" id="n">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Secret Crush</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                                      <li><a href="">Welcome <%= user.name %> </a></li>
+                                      <li><a href="/about">About</a></li>
+                                    <li><a href="/logout">LogOut</a></li>
+                
+                                   
+                                    
+              
+
+                  
+                    
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<div class="container">
+
+<div class="container set border rounded">
+  <header>
+    <div class="container">
+      <h1>Your Matches :</h1>
+    </div>
+  </header>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+
+
+  <% if(user.mliketotal.length>0){
+              user.mliketotal.forEach(function(friend){ %>
+
+               <div class="col-md-3 col-sm-6">
+                <div class="card" style="width: 18rem;">
+                <div class="card-body">
+    <h5 class="card-title"><p><%= friend.name%></p>
+</h5>
+    <p class="card-text"> <form action="/unmatch" method="POST">
+  
+    <input type="hidden" name="id" value='<%=friend.id%>'>
+   <input type="hidden" name="name" value='<%=friend.name%>'>
+  <button class="btn btn-danger" type="submit">UnMatch</button>
+</form></p>
+    
+  </div>
+</div>
+              
+
+</div>
+</div>
+<%
+          })
+}else{ %>
+<div class="col-md-3 col-sm-6">
+<div class="card" style="width: 18rem;">
+<div class="card-body">
+    
+    <p class="card-text"><p>No matches yet !</p></p>
+    
+  </div>
+</div>
+
+
+  </div>
+</div>
+<%
+  
+}
+
+%>
+
+</div>
+
+<div class="space"></div>
+<div class="formargin"></div>
+
+<div class="container set rounded">
+  <header>
+    <div class="container"><h1>People you have liked so far :</h1></div>
+  </header>
+  
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+
+<% if(user.liketotal.length>0){
+              user.liketotal.forEach(function(friend){ 
+
+              if(user.mlike.includes(friend.id)){}else{%>
+
+               <div class="col-md-3 col-sm-6">
+
+                <div class="card" style="width: 18rem;">
+ 
+  <div class="card-body">
+    <h5 class="card-title"><p><%= friend.name%></p></h5>
+    <p class="card-text"> <form action="/remove" method="POST">
+  
+ 
+   <input type="hidden" name="id" value='<%=friend.id%>'>
+   <input type="hidden" name="name" value='<%=friend.name%>'>
+  <button class="btn btn-danger" type="submit">Unlike</button>
+</form></p>
+    
+  </div>
+</div>
+
+
+                
+
+</div>
+                <% }
+
+          })
+}else{ %>
+
+<div class="col-md-3 col-sm-6">
+<div class="card" style="width: 18rem;">
+<div class="card-body">
+    
+    <p class="card-text"><p>You haven't liked anyone yet !</p></p>
+    
+  </div>
+</div>
+
+
+  </div>
+<%
+  
+}
+
+%>
+
+
+<!--</div>-->
+</div>
+</div>
+
+<div class="space"></div>
+<div class="formargin"></div>
+
+<div class="container set rounded">
+  <header>
+    <div class="container"><h1>Your Facebook Friends:</h1></div>
+  </header>
+  <p>As per facebook policy only people who also use this app among your friends will be listed. Please share this app link in facebook to get your friends using this app. </p>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+<% if(user.friends.length>0){
+
+user.friends.forEach(function(friend){
+  
+       
+     
+ if(user.like.includes(friend.id)){}else{  %>
+<div class="col-md-3 col-sm-6">
+
+<div class="card" style="width: 18rem;">
+ 
+  <div class="card-body">
+    <h5 class="card-title"><p><%= friend.name%></p></h5>
+    <p class="card-text"><form action="/index" method="POST">
+  
+ 
+   <input type="hidden" name="id" value='<%=friend.id%>'>
+   <input type="hidden" name="name" value='<%=friend.name%>'>
+  <button class="btn btn-danger" type="submit">Like</button>
+</form></p>
+    
+  </div>
+</div>
+
+
+
+
+</div>
+<%  
+}
+
+
+  
+
+}) 
+
+}else{ %>
+  
+  <div class="col-md-3 col-sm-6">
+<div class="card" style="width: 18rem;">
+ 
+  <div class="card-body">
+    
+    <p class="card-text"><p> None of your friend are using this app yet. As per facebook policy only people who also use this app among your friends will be listed. Please share this app link in facebook to get your friends using this app. </p>
+    
+  </div>
+</div>
+
+
+
+    </div>
+<%  
+}
+  
+  %>
+
+
+</div>
+
+</div>
+
+</div>
+
+<div class="space"></div>
+
+<%- include("./partials/footer") %>
